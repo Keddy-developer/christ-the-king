@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ChevronDown, PlayCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <section 
-      id="home" 
+    <section
+      id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-hero-gradient pt-20"
     >
       {/* Decorative Elements */}
@@ -38,26 +39,30 @@ const Hero = () => {
 
           {/* Subheading */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            Join us at Christ The King International Pentecostal Fellowship – Malindi, 
+            Join us at Christ The King International Pentecostal Fellowship – Malindi,
             where faith meets community and every soul finds purpose.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <Button 
-              size="lg" 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg shadow-warm transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
-            >
-              Plan Your Visit
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="border-2 border-foreground/20 text-foreground hover:bg-foreground/5 font-semibold px-8 py-6 text-lg group"
-            >
-              <PlayCircle className="mr-2 h-5 w-5 group-hover:text-primary transition-colors" />
-              Watch Online
-            </Button>
+            <Link to="/contact">
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg shadow-warm transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto"
+              >
+                Plan Your Visit
+              </Button>
+            </Link>
+            <Link to="/services">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-foreground/20 text-foreground hover:bg-foreground/5 font-semibold px-8 py-6 text-lg group w-full sm:w-auto"
+              >
+                <PlayCircle className="mr-2 h-5 w-5 group-hover:text-primary transition-colors" />
+                Watch Online
+              </Button>
+            </Link>
           </div>
 
           {/* Service Times Preview */}
@@ -67,7 +72,7 @@ const Hero = () => {
               { day: "Wednesday", time: "6:30 PM", label: "Bible Study" },
               { day: "Friday", time: "7:00 PM", label: "Youth Fellowship" },
             ].map((service) => (
-              <div 
+              <div
                 key={service.day}
                 className="bg-background/60 backdrop-blur-sm rounded-xl p-5 shadow-card border border-border/50 hover:shadow-soft transition-all duration-300"
               >
@@ -82,10 +87,10 @@ const Hero = () => {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <a href="#about" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+        <Link to="/about" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
           <span className="text-xs font-medium uppercase tracking-widest">Discover More</span>
           <ChevronDown size={24} />
-        </a>
+        </Link>
       </div>
     </section>
   );

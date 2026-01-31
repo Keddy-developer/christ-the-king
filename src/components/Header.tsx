@@ -1,30 +1,36 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import churchLogo from "@/assets/church-logo.jpg";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Services", href: "#services" },
-    { name: "Ministries", href: "#ministries" },
-    { name: "Events", href: "#events" },
-    { name: "Give", href: "#give" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Services", href: "/services" },
+    { name: "Ministries", href: "/ministries" },
+    { name: "Events", href: "/events" },
+    { name: "Give", href: "/giving" },
+    { name: "Contact", href: "/contact" },
   ];
+
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#home" className="flex items-center gap-3">
-            <img 
-              src={churchLogo} 
-              alt="Christ The King International Pentecostal Fellowship" 
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              src={churchLogo}
+              alt="Christ The King International Pentecostal Fellowship"
               className="h-14 w-14 object-contain"
             />
             <div className="hidden sm:block">
@@ -35,26 +41,29 @@ const Header = () => {
                 International Pentecostal Fellowship
               </p>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
+                to={link.href}
+                className={`text-sm font-medium transition-colors duration-200 ${isActive(link.href) ? "text-primary" : "text-muted-foreground hover:text-primary"
+                  }`}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </nav>
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6">
-              Join Us Sunday
-            </Button>
+            <Link to="/contact">
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6">
+                Join Us Sunday
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -72,18 +81,21 @@ const Header = () => {
           <div className="lg:hidden py-4 border-t border-border/50 animate-fade-in">
             <nav className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
-                  className="text-base font-medium text-muted-foreground hover:text-primary transition-colors duration-200 py-2"
+                  to={link.href}
+                  className={`text-base font-medium transition-colors duration-200 py-2 ${isActive(link.href) ? "text-primary" : "text-muted-foreground hover:text-primary"
+                    }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium mt-2 w-full">
-                Join Us Sunday
-              </Button>
+              <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium mt-2 w-full">
+                  Join Us Sunday
+                </Button>
+              </Link>
             </nav>
           </div>
         )}
