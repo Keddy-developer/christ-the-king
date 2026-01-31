@@ -1,8 +1,14 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, PlayCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import PlanVisitModal from "./modals/PlanVisitModal";
+import WatchOnlineModal from "./modals/WatchOnlineModal";
 
 const Hero = () => {
+  const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
+  const [isWatchModalOpen, setIsWatchModalOpen] = useState(false);
+
   return (
     <section
       id="home"
@@ -45,24 +51,22 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <Link to="/contact">
-              <Button
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg shadow-warm transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto"
-              >
-                Plan Your Visit
-              </Button>
-            </Link>
-            <Link to="/services">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-foreground/20 text-foreground hover:bg-foreground/5 font-semibold px-8 py-6 text-lg group w-full sm:w-auto"
-              >
-                <PlayCircle className="mr-2 h-5 w-5 group-hover:text-primary transition-colors" />
-                Watch Online
-              </Button>
-            </Link>
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg shadow-warm transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto"
+              onClick={() => setIsPlanModalOpen(true)}
+            >
+              Plan Your Visit
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-2 border-foreground/20 text-foreground hover:bg-foreground/5 font-semibold px-8 py-6 text-lg group w-full sm:w-auto"
+              onClick={() => setIsWatchModalOpen(true)}
+            >
+              <PlayCircle className="mr-2 h-5 w-5 group-hover:text-primary transition-colors" />
+              Watch Online
+            </Button>
           </div>
 
           {/* Service Times Preview */}
@@ -92,6 +96,9 @@ const Hero = () => {
           <ChevronDown size={24} />
         </Link>
       </div>
+
+      <PlanVisitModal isOpen={isPlanModalOpen} onOpenChange={setIsPlanModalOpen} />
+      <WatchOnlineModal isOpen={isWatchModalOpen} onOpenChange={setIsWatchModalOpen} />
     </section>
   );
 };

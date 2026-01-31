@@ -1,17 +1,21 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MinistriesComponent from "@/components/Ministries";
 import { Handshake, Heart, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import VolunteerModal from "@/components/modals/VolunteerModal";
 
 const additionalDepts = [
-    { title: "Ushering & Protocol", lead: "Brother James L.", contact: "protocol@ctkpf-malindi.org" },
-    { title: "Hospitality Team", lead: "Sister Martha K.", contact: "hospitality@ctkpf-malindi.org" },
-    { title: "Media & Tech", lead: "Brother Kevin O.", contact: "media@ctkpf-malindi.org" },
-    { title: "Intercessory Prayer", lead: "Elder Joseph M.", contact: "prayer@ctkpf-malindi.org" },
+    { title: "Ushering & Protocol", lead: "Brother James L.", contact: "protocol@ckipf-malindi.org" },
+    { title: "Hospitality Team", lead: "Sister Martha K.", contact: "hospitality@ckipf-malindi.org" },
+    { title: "Media & Tech", lead: "Brother Kevin O.", contact: "media@ckipf-malindi.org" },
+    { title: "Intercessory Prayer", lead: "Elder Joseph M.", contact: "prayer@ckipf-malindi.org" },
 ];
 
 const Ministries = () => {
+    const [isVolunteerModalOpen, setIsVolunteerModalOpen] = useState(false);
+
     return (
         <div className="min-h-screen bg-background pt-20">
             <Header />
@@ -59,7 +63,11 @@ const Ministries = () => {
                         <p className="mb-8 opacity-90">
                             Not sure where to start? Click the button below to fill out a simple form and our ministry coordinator will get in touch.
                         </p>
-                        <Button size="lg" className="bg-background text-primary hover:bg-background/90 font-bold px-10">
+                        <Button
+                            size="lg"
+                            className="bg-background text-primary hover:bg-background/90 font-bold px-10"
+                            onClick={() => setIsVolunteerModalOpen(true)}
+                        >
                             Apply to Volunteer
                         </Button>
                     </div>
@@ -81,6 +89,7 @@ const Ministries = () => {
             </section>
 
             <Footer />
+            <VolunteerModal isOpen={isVolunteerModalOpen} onOpenChange={setIsVolunteerModalOpen} />
         </div>
     );
 };

@@ -1,27 +1,20 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GivingComponent from "@/components/Giving";
-import { ShieldCheck, Gift, Globe, HandHeart } from "lucide-react";
-
-const impacts = [
-    {
-        icon: Globe,
-        title: "Global Evangelism",
-        detail: "Your support helps us reach unreached communities with the Word of God through missions.",
-    },
-    {
-        icon: HandHeart,
-        title: "Local Charity",
-        detail: "We provide monthly food baskets to over 50 families in need within the Malindi area.",
-    },
-    {
-        icon: Gift,
-        title: "Community Programs",
-        detail: "Funding for free medical camps, youth seminars, and widow empowerment programs.",
-    },
-];
+import {
+    Heart,
+    Target,
+    Lightbulb,
+    ArrowRight,
+    ShieldCheck
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import GivingModal from "@/components/modals/GivingModal";
 
 const Giving = () => {
+    const [isGivingModalOpen, setIsGivingModalOpen] = useState(false);
+
     return (
         <div className="min-h-screen bg-background pt-20">
             <Header />
@@ -29,9 +22,9 @@ const Giving = () => {
             {/* Page Hero */}
             <section className="bg-church-red py-20 text-primary-foreground text-center">
                 <div className="container mx-auto px-4">
-                    <h1 className="font-serif text-5xl font-bold mb-4">Generosity & Stewardship</h1>
+                    <h1 className="font-serif text-5xl font-bold mb-4">Grateful Giving</h1>
                     <p className="text-xl max-w-2xl mx-auto opacity-90">
-                        Investing in the Kingdom of God and making a tangible difference in our community.
+                        Your generosity fuels our mission to spread God's love and serve our community.
                     </p>
                 </div>
             </section>
@@ -44,7 +37,7 @@ const Giving = () => {
                     <div className="grid md:grid-cols-2 gap-16 items-center">
                         <div className="relative">
                             <img
-                                src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?q=80&w=600&h=400&auto=format&fit=crop"
+                                src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=800&auto=format&fit=crop"
                                 alt="Giving"
                                 className="rounded-3xl shadow-warm object-cover w-full aspect-[4/3]"
                             />
@@ -60,40 +53,99 @@ const Giving = () => {
                                 gratitude for all that God has provided in our lives.
                             </p>
                             <ul className="space-y-4">
-                                <li className="flex gap-4">
-                                    <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center text-primary flex-shrink-0 mt-1">
-                                        <ShieldCheck size={14} />
-                                    </div>
-                                    <p className="text-foreground font-medium">Safe & Secure Transactions</p>
-                                </li>
-                                <li className="flex gap-4">
-                                    <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center text-primary flex-shrink-0 mt-1">
-                                        <ShieldCheck size={14} />
-                                    </div>
-                                    <p className="text-foreground font-medium">Transparent Financial Accountability</p>
-                                </li>
+                                {[
+                                    "Safe & Secure Transactions",
+                                    "Transparent Financial Accountability",
+                                    "Monthly Impact Reports",
+                                    "Tax-deductible Contributions"
+                                ].map((item) => (
+                                    <li key={item} className="flex gap-4">
+                                        <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center text-primary flex-shrink-0 mt-1">
+                                            <ShieldCheck size={14} />
+                                        </div>
+                                        <p className="text-foreground font-medium">{item}</p>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Impact Statistics */}
-            <section className="py-24 bg-church-warm border-y border-border">
+            {/* Impact Section */}
+            <section className="py-24 bg-church-cream">
                 <div className="container mx-auto px-4">
-                    <div className="text-center mb-16">
-                        <h2 className="font-serif text-4xl font-bold text-foreground">See the Impact</h2>
-                        <p className="text-muted-foreground mt-4">Your contributions go directly into building lives and restoring hope.</p>
+                    <div className="max-w-4xl mx-auto text-center mb-16">
+                        <h2 className="font-serif text-4xl font-bold mb-6">Where Your Seeds Go</h2>
+                        <p className="text-lg text-muted-foreground">
+                            Every coin given at Christ The King International Pentecostal Fellowship – Malindi
+                            is directed towards spreading the Gospel and uplifting the less fortunate.
+                        </p>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {impacts.map((impact) => (
-                            <div key={impact.title} className="bg-background p-8 rounded-2xl shadow-card text-center hover:scale-105 transition-transform">
-                                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mx-auto mb-6">
-                                    <impact.icon size={32} />
+                    <div className="grid md:grid-cols-3 gap-8 mb-20">
+                        {[
+                            {
+                                icon: <Target className="text-primary" />,
+                                title: "Church Growth",
+                                desc: "Support for our building projects and venue enhancements."
+                            },
+                            {
+                                icon: <Heart className="text-primary" />,
+                                title: "Community Outreach",
+                                desc: "Feeding programs, medical camps, and local mission work."
+                            },
+                            {
+                                icon: <Lightbulb className="text-primary" />,
+                                title: "Kingdom Education",
+                                desc: "Children's ministry resources and leadership training."
+                            },
+                        ].map((item, idx) => (
+                            <div key={idx} className="bg-background p-8 rounded-3xl shadow-card border border-border">
+                                <div className="w-12 h-12 bg-primary/5 rounded-2xl flex items-center justify-center mb-6">
+                                    {item.icon}
                                 </div>
-                                <h3 className="font-serif text-xl font-bold mb-4">{impact.title}</h3>
-                                <p className="text-muted-foreground text-sm leading-relaxed">{impact.detail}</p>
+                                <h3 className="font-bold text-xl mb-3">{item.title}</h3>
+                                <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="bg-foreground text-background p-12 rounded-[3rem] text-center max-w-4xl mx-auto relative overflow-hidden shadow-2xl">
+                        {/* Decoration */}
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[100px]" />
+
+                        <div className="relative z-10">
+                            <h3 className="font-serif text-3xl font-bold mb-6 italic">"Each of you should give what you have decided in your heart to give."</h3>
+                            <p className="text-muted-foreground mb-10 max-w-2xl mx-auto">
+                                2 Corinthians 9:7 — Join us in building the Kingdom of God here in Malindi and beyond.
+                            </p>
+                            <Button
+                                size="lg"
+                                className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-12 py-8 text-xl rounded-2xl group"
+                                onClick={() => setIsGivingModalOpen(true)}
+                            >
+                                Give Online Now
+                                <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Stats */}
+            <section className="py-16 bg-background border-y border-border">
+                <div className="container mx-auto px-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        {[
+                            { label: "Families Supported", value: "500+" },
+                            { label: "Mission Projects", value: "12" },
+                            { label: "Lives Impacted", value: "5,000+" },
+                            { label: "Community Events", value: "24/yr" },
+                        ].map((stat, idx) => (
+                            <div key={idx} className="text-center">
+                                <p className="text-3xl md:text-4xl font-bold text-primary mb-1">{stat.value}</p>
+                                <p className="text-sm text-muted-foreground font-medium uppercase tracking-wider">{stat.label}</p>
                             </div>
                         ))}
                     </div>
@@ -101,6 +153,7 @@ const Giving = () => {
             </section>
 
             <Footer />
+            <GivingModal isOpen={isGivingModalOpen} onOpenChange={setIsGivingModalOpen} />
         </div>
     );
 };

@@ -3,9 +3,11 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import churchLogo from "@/assets/church-logo.jpg";
+import PlanVisitModal from "./modals/PlanVisitModal";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
   const location = useLocation();
 
   const navLinks = [
@@ -23,33 +25,29 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border transition-all duration-300">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <img
-              src={churchLogo}
-              alt="Christ The King International Pentecostal Fellowship"
-              className="h-14 w-14 object-contain"
-            />
-            <div className="hidden sm:block">
-              <p className="font-serif text-lg font-semibold text-foreground leading-tight">
-                Christ The King
-              </p>
-              <p className="text-xs text-muted-foreground">
-                International Pentecostal Fellowship
-              </p>
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-soft group-hover:shadow-warm transition-all duration-300">
+              <img src={churchLogo} alt="Church Logo" className="w-full h-full object-cover" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-serif font-bold text-xl leading-tight text-gradient-red">CKIPF</span>
+              <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold">Malindi Branch</span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
-                className={`text-sm font-medium transition-colors duration-200 ${isActive(link.href) ? "text-primary" : "text-muted-foreground hover:text-primary"
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive(link.href)
+                  ? "text-primary bg-primary/5 shadow-sm"
+                  : "text-muted-foreground hover:text-primary hover:bg-muted"
                   }`}
               >
                 {link.name}
@@ -57,49 +55,57 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
-            <Link to="/contact">
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6">
-                Join Us Sunday
-              </Button>
-            </Link>
+          {/* Header Actions */}
+          <div className="hidden lg:flex items-center gap-4">
+            <Button
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 rounded-full shadow-warm transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
+              onClick={() => setIsPlanModalOpen(true)}
+            >
+              Join Us Sunday
+            </Button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle */}
           <button
-            className="lg:hidden p-2 text-foreground"
+            className="lg:hidden p-2 text-muted-foreground hover:text-primary transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-border/50 animate-fade-in">
-            <nav className="flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className={`text-base font-medium transition-colors duration-200 py-2 ${isActive(link.href) ? "text-primary" : "text-muted-foreground hover:text-primary"
-                    }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium mt-2 w-full">
-                  Join Us Sunday
-                </Button>
-              </Link>
-            </nav>
-          </div>
-        )}
       </div>
+
+      {/* Mobile Navigation */}
+      <div
+        className={`lg:hidden absolute top-full left-0 right-0 bg-background border-b border-border transition-all duration-300 overflow-hidden ${isMenuOpen ? "max-h-screen border-t" : "max-h-0"
+          }`}
+      >
+        <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              to={link.href}
+              className={`text-lg font-medium py-2 transition-colors ${isActive(link.href) ? "text-primary" : "text-muted-foreground"
+                }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {link.name}
+            </Link>
+          ))}
+          <Button
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 rounded-2xl mt-4"
+            onClick={() => {
+              setIsPlanModalOpen(true);
+              setIsMenuOpen(false);
+            }}
+          >
+            Join Us Sunday
+          </Button>
+        </div>
+      </div>
+
+      <PlanVisitModal isOpen={isPlanModalOpen} onOpenChange={setIsPlanModalOpen} />
     </header>
   );
 };

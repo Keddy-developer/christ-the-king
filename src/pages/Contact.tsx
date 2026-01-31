@@ -41,8 +41,8 @@ const Contact = () => {
                                 <div className="p-6 bg-church-cream rounded-2xl border border-border">
                                     <Mail className="text-primary mb-4" />
                                     <h3 className="font-bold text-lg mb-2">Email Us</h3>
-                                    <p className="text-muted-foreground text-sm">info@ctkpf-malindi.org</p>
-                                    <p className="text-muted-foreground text-sm">prayer@ctkpf-malindi.org</p>
+                                    <p className="text-muted-foreground text-sm">info@ckipf-malindi.org</p>
+                                    <p className="text-muted-foreground text-sm">prayer@ckipf-malindi.org</p>
                                 </div>
                             </div>
 

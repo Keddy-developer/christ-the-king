@@ -1,8 +1,10 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ServicesComponent from "@/components/Services";
 import { HelpCircle, ChevronRight, MessageCircle } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import WatchOnlineModal from "@/components/modals/WatchOnlineModal";
 
 const faqs = [
     {
@@ -24,6 +26,8 @@ const faqs = [
 ];
 
 const Services = () => {
+    const [isWatchModalOpen, setIsWatchModalOpen] = useState(false);
+
     return (
         <div className="min-h-screen bg-background pt-20">
             <Header />
@@ -79,7 +83,10 @@ const Services = () => {
                             <button className="bg-primary text-primary-foreground px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-primary/90 transition-all">
                                 <MessageCircle size={20} /> Join WhatsApp Group
                             </button>
-                            <button className="bg-foreground text-background px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:opacity-90 transition-all">
+                            <button
+                                className="bg-foreground text-background px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:opacity-90 transition-all"
+                                onClick={() => setIsWatchModalOpen(true)}
+                            >
                                 Watch Live on YouTube <ChevronRight size={20} />
                             </button>
                         </div>
@@ -88,6 +95,7 @@ const Services = () => {
             </section>
 
             <Footer />
+            <WatchOnlineModal isOpen={isWatchModalOpen} onOpenChange={setIsWatchModalOpen} />
         </div>
     );
 };

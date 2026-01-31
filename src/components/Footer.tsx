@@ -54,7 +54,7 @@ const Footer = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-background mb-1">Email</h4>
-                    <p className="text-background/70">info@ctkpf-malindi.org</p>
+                    <p className="text-background/70">info@ckipf-malindi.org</p>
                   </div>
                 </div>
 
